@@ -83,6 +83,41 @@
   padding: 2em;
 }
 
+.counter-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.counter-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter-value {
+  font-size: 1.2em;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.reset-btn {
+  margin-top: 8px;
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.reset-btn:hover {
+  opacity: 1;
+}
+
 .read-the-docs {
   color: #888;
 }
