@@ -20,11 +20,11 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + React ⚡</h1>
       <div className="card">
         <div className="counter-controls">
           <button onClick={decrement} className="counter-btn">-</button>
-          <span className="counter-value">count is {count}</span>
+          <span className="counter-value">Sayaç: {count}</span>
           <button onClick={increment} className="counter-btn">+</button>
         </div>
         <button onClick={reset} className="reset-btn">Reset</button>

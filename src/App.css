@@ -81,6 +81,7 @@
 
 .card {
   padding: 2em;
+  border-radius: 12px;
 }
 
 .counter-controls {
@@ -105,7 +106,8 @@
 .counter-value {
   font-size: 1.2em;
   font-weight: 600;
-  min-width: 120px;
+  min-width: 140px;
+  color: #646cff;
 }
 
 .reset-btn {
