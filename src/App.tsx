@@ -8,6 +8,10 @@ function App() {
     const saved = localStorage.getItem('counter-value')
     return saved ? parseInt(saved, 10) : 0
   })
+  const [maxCount, setMaxCount] = useState(() => {
+    const saved = localStorage.getItem('counter-max')
+    return saved ? parseInt(saved, 10) : 0
+  })
 
   const increment = () => setCount((prev) => prev + 1)
   const decrement = () => setCount((prev) => prev - 1)
@@ -15,7 +19,11 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('counter-value', count.toString())
-  }, [count])
+    if (count > maxCount) {
+      setMaxCount(count)
+      localStorage.setItem('counter-max', count.toString())
+    }
+  }, [count, maxCount])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -25,6 +33,12 @@ function App() {
         setCount((prev) => prev - 1)
       } else if (e.key === 'r' || e.key === 'R') {
         setCount(0)
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        setCount((prev) => prev + 1)
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        setCount((prev) => prev - 1)
       }
     }
 
@@ -62,7 +76,7 @@ function App() {
           </button>
         </div>
         <p className="keyboard-hint">
-          <small>💡 Klavye: + / - / R</small>
+          <small>💡 Klavye: + / - / R / ↑ / ↓</small>
         </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -87,9 +101,19 @@ function App() {
             🏆 50! Efsane!
           </p>
         )}
+        {count === 100 && (
+          <p className="milestone-message">
+            🚀 100! İnanılmaz!
+          </p>
+        )}
         {count < 0 && (
           <p className="warning-message">
             ⚠️ Negatif değere ulaştınız!
+          </p>
+        )}
+        {maxCount > 0 && count === maxCount && count > 0 && (
+          <p className="record-message">
+            🏅 Yeni rekor! En yüksek: {maxCount}
           </p>
         )}
       </div>
@@ -98,6 +122,9 @@ function App() {
       </p>
       <div className="footer-info">
         <small>Made with ❤️ using React {count > 0 ? `(${count} clicks)` : ''}</small>
+        {maxCount > 0 && (
+          <small className="max-indicator">📊 En yüksek: {maxCount}</small>
+        )}
         {count > 0 && (
           <small className="save-indicator">💾 Değer kaydedildi</small>
         )}
