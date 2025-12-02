@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,6 +9,21 @@ function App() {
   const increment = () => setCount((prev) => prev + 1)
   const decrement = () => setCount((prev) => prev - 1)
   const reset = () => setCount(0)
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === '+' || e.key === '=') {
+        setCount((prev) => prev + 1)
+      } else if (e.key === '-') {
+        setCount((prev) => prev - 1)
+      } else if (e.key === 'r' || e.key === 'R') {
+        setCount(0)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [])
 
   return (
     <>
@@ -27,13 +42,23 @@ function App() {
           <span className="counter-value">Sayaç: {count}</span>
           <button onClick={increment} className="counter-btn">+</button>
         </div>
-        <button onClick={reset} className="reset-btn">Reset</button>
+        <button onClick={reset} className="reset-btn" title="Press 'R' to reset">
+          Reset
+        </button>
+        <p className="keyboard-hint">
+          <small>💡 Klavye: + / - / R</small>
+        </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
         {count > 10 && (
           <p className="celebration-message">
             🎉 Harika! 10'dan fazla tıkladınız!
+          </p>
+        )}
+        {count === 10 && (
+          <p className="milestone-message">
+            🎯 Tam 10! Mükemmel!
           </p>
         )}
         {count < 0 && (
