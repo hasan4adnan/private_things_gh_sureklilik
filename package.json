@@ -1,5 +1,6 @@
 {
   "name": "my-react-app",
+  "description": "Modern React + TypeScript + Vite application with enhanced UI components",
   "private": true,
   "version": "0.0.0",
   "type": "module",
