@@ -59,6 +59,13 @@
   margin-bottom: 20px;
 }
 
+.mini-card .click-info {
+  color: #4f8cff;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
 .mini-card button {
   background: #4f8cff;
   color: #fff;
@@ -97,6 +104,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.counter-btn:active {
+  transform: scale(0.95);
 }
 
 .counter-value {
@@ -118,4 +130,41 @@
 
 .read-the-docs {
   color: #888;
+  margin-bottom: 0.5em;
+}
+
+.footer-info {
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid rgba(136, 136, 136, 0.2);
+}
+
+.footer-info small {
+  color: #888;
+  font-size: 0.85em;
+}
+
+.celebration-message {
+  color: #10b981;
+  font-weight: bold;
+  margin-top: 1em;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.warning-message {
+  color: #f59e0b;
+  font-weight: bold;
+  margin-top: 1em;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

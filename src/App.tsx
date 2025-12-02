@@ -32,14 +32,22 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
         {count > 10 && (
-          <p style={{ color: '#10b981', fontWeight: 'bold', marginTop: '1em' }}>
+          <p className="celebration-message">
             🎉 Harika! 10'dan fazla tıkladınız!
+          </p>
+        )}
+        {count < 0 && (
+          <p className="warning-message">
+            ⚠️ Negatif değere ulaştınız!
           </p>
         )}
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <div className="footer-info">
+        <small>Made with ❤️ using React {count > 0 ? `(${count} clicks)` : ''}</small>
+      </div>
     </>
   )
 }
