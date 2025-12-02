@@ -4,11 +4,18 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(() => {
+    const saved = localStorage.getItem('counter-value')
+    return saved ? parseInt(saved, 10) : 0
+  })
 
   const increment = () => setCount((prev) => prev + 1)
   const decrement = () => setCount((prev) => prev - 1)
   const reset = () => setCount(0)
+
+  useEffect(() => {
+    localStorage.setItem('counter-value', count.toString())
+  }, [count])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -42,9 +49,18 @@ function App() {
           <span className="counter-value">Sayaç: {count}</span>
           <button onClick={increment} className="counter-btn">+</button>
         </div>
-        <button onClick={reset} className="reset-btn" title="Press 'R' to reset">
-          Reset
-        </button>
+        <div className="action-buttons">
+          <button onClick={reset} className="reset-btn" title="Press 'R' to reset">
+            Reset
+          </button>
+          <button 
+            onClick={() => setCount((prev) => prev + 10)} 
+            className="increment-10-btn"
+            title="Add 10"
+          >
+            +10
+          </button>
+        </div>
         <p className="keyboard-hint">
           <small>💡 Klavye: + / - / R</small>
         </p>
@@ -61,6 +77,16 @@ function App() {
             🎯 Tam 10! Mükemmel!
           </p>
         )}
+        {count === 25 && (
+          <p className="milestone-message">
+            🌟 25'e ulaştınız! Süper!
+          </p>
+        )}
+        {count === 50 && (
+          <p className="milestone-message">
+            🏆 50! Efsane!
+          </p>
+        )}
         {count < 0 && (
           <p className="warning-message">
             ⚠️ Negatif değere ulaştınız!
@@ -72,6 +98,9 @@ function App() {
       </p>
       <div className="footer-info">
         <small>Made with ❤️ using React {count > 0 ? `(${count} clicks)` : ''}</small>
+        {count > 0 && (
+          <small className="save-indicator">💾 Değer kaydedildi</small>
+        )}
       </div>
     </>
   )

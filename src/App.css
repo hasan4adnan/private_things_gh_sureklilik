@@ -89,6 +89,9 @@
 .card {
   padding: 2em;
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .counter-controls {
@@ -120,16 +123,50 @@
   font-weight: 600;
   min-width: 140px;
   color: #646cff;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: inline-block;
+}
+
+.counter-value:hover {
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 8px;
 }
 
 .reset-btn {
-  margin-top: 8px;
   opacity: 0.7;
   font-size: 0.9em;
 }
 
 .reset-btn:hover {
   opacity: 1;
+}
+
+.increment-10-btn {
+  opacity: 0.7;
+  font-size: 0.9em;
+  background-color: #10b981;
+  color: white;
+  border: none;
+}
+
+.increment-10-btn:hover {
+  opacity: 1;
+  background-color: #059669;
 }
 
 .read-the-docs {
@@ -146,6 +183,14 @@
 .footer-info small {
   color: #888;
   font-size: 0.85em;
+  display: block;
+  margin-top: 4px;
+}
+
+.save-indicator {
+  color: #10b981 !important;
+  font-size: 0.75em !important;
+  animation: fadeIn 0.3s ease-in;
 }
 
 .celebration-message {
