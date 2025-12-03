@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import './WeatherCard.css';
 
 interface WeatherData {
@@ -8,6 +8,16 @@ interface WeatherData {
   humidity: number;
   windSpeed: number;
 }
+
+const CITIES = ['İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Bursa'] as const;
+const CONDITIONS = ['Güneşli', 'Bulutlu', 'Yağmurlu', 'Karlı', 'Rüzgarlı'] as const;
+const EMOJI_MAP: Record<string, string> = {
+  'Güneşli': '☀️',
+  'Bulutlu': '☁️',
+  'Yağmurlu': '🌧️',
+  'Karlı': '❄️',
+  'Rüzgarlı': '💨',
+};
 
 export default function WeatherCard() {
   const [weather, setWeather] = useState<WeatherData>({
@@ -27,13 +37,10 @@ export default function WeatherCard() {
     
     setLoading(true);
     timeoutRef.current = setTimeout(() => {
-      const cities = ['İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Bursa'];
-      const conditions = ['Güneşli', 'Bulutlu', 'Yağmurlu', 'Karlı', 'Rüzgarlı'];
-      
       setWeather({
-        city: cities[Math.floor(Math.random() * cities.length)],
+        city: CITIES[Math.floor(Math.random() * CITIES.length)],
         temperature: Math.floor(Math.random() * 30) + 10,
-        condition: conditions[Math.floor(Math.random() * conditions.length)],
+        condition: CONDITIONS[Math.floor(Math.random() * CONDITIONS.length)],
         humidity: Math.floor(Math.random() * 40) + 40,
         windSpeed: Math.floor(Math.random() * 20) + 5,
       });
@@ -49,16 +56,10 @@ export default function WeatherCard() {
     };
   }, []);
 
-  const getWeatherEmoji = (condition: string) => {
-    const emojiMap: Record<string, string> = {
-      'Güneşli': '☀️',
-      'Bulutlu': '☁️',
-      'Yağmurlu': '🌧️',
-      'Karlı': '❄️',
-      'Rüzgarlı': '💨',
-    };
-    return emojiMap[condition] || '🌤️';
-  };
+  const weatherEmoji = useMemo(() => 
+    EMOJI_MAP[weather.condition] || '🌤️',
+    [weather.condition]
+  );
 
   return (
     <div className="weather-card">
@@ -80,7 +81,7 @@ export default function WeatherCard() {
             {weather.temperature}°C
           </div>
           <div className="weather-condition">
-            {getWeatherEmoji(weather.condition)} {weather.condition}
+            {weatherEmoji} {weather.condition}
           </div>
         </div>
         

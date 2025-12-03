@@ -13,6 +13,10 @@ export default function TodoList() {
   const [todos, setTodos] = useLocalStorage<Todo[]>('todos', []);
   const [inputValue, setInputValue] = useState('');
 
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
+
   const addTodo = useCallback(() => {
     if (inputValue.trim()) {
       const newTodo: Todo = {
@@ -25,6 +29,12 @@ export default function TodoList() {
       setInputValue('');
     }
   }, [inputValue, setTodos]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTodo();
+    }
+  }, [addTodo]);
 
   const toggleTodo = useCallback((id: number) => {
     setTodos((prevTodos) =>
@@ -63,8 +73,8 @@ export default function TodoList() {
           className="todo-input"
           placeholder="Yeni görev ekle..."
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <button className="todo-add-btn" onClick={addTodo}>
           ➕ Ekle

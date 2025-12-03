@@ -4,6 +4,25 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useLocalStorage } from './hooks/useLocalStorage'
 
+function FooterInfo({ count, maxCount }: { count: number; maxCount: number }) {
+  const footerText = useMemo(() => 
+    count > 0 ? `Made with ❤️ using React (${count} clicks)` : 'Made with ❤️ using React',
+    [count]
+  )
+
+  return (
+    <div className="footer-info">
+      <small>{footerText}</small>
+      {maxCount > 0 && (
+        <small className="max-indicator">📊 En yüksek: {maxCount}</small>
+      )}
+      {count > 0 && (
+        <small className="save-indicator">💾 Değer kaydedildi</small>
+      )}
+    </div>
+  )
+}
+
 function App() {
   const [count, setCount] = useLocalStorage<number>('counter-value', 0)
   const [maxCount, setMaxCount] = useLocalStorage<number>('counter-max', 0)
@@ -40,26 +59,26 @@ function App() {
     }
   }, [count, maxCount, setMaxCount])
 
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === '+' || e.key === '=') {
-        setCount((prev) => prev + 1)
-      } else if (e.key === '-') {
-        setCount((prev) => prev - 1)
-      } else if (e.key === 'r' || e.key === 'R') {
-        setCount(0)
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault()
-        setCount((prev) => prev + 1)
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault()
-        setCount((prev) => prev - 1)
-      }
+  const handleKeyPress = useCallback((e: KeyboardEvent) => {
+    if (e.key === '+' || e.key === '=') {
+      setCount((prev) => prev + 1)
+    } else if (e.key === '-') {
+      setCount((prev) => prev - 1)
+    } else if (e.key === 'r' || e.key === 'R') {
+      setCount(0)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setCount((prev) => prev + 1)
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setCount((prev) => prev - 1)
     }
+  }, [setCount])
 
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [setCount])
+  }, [handleKeyPress])
 
   return (
     <>
@@ -105,15 +124,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <div className="footer-info">
-        <small>Made with ❤️ using React {count > 0 ? `(${count} clicks)` : ''}</small>
-        {maxCount > 0 && (
-          <small className="max-indicator">📊 En yüksek: {maxCount}</small>
-        )}
-        {count > 0 && (
-          <small className="save-indicator">💾 Değer kaydedildi</small>
-        )}
-      </div>
+      <FooterInfo count={count} maxCount={maxCount} />
     </>
   )
 }

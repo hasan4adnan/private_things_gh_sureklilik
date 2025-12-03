@@ -7,9 +7,9 @@ export default function App2() {
   const [clickCount, setClickCount] = useLocalStorage<number>('app2-click-count', 0);
 
   const handleClick = useCallback(() => {
-    setClicked(!clicked);
+    setClicked(prev => !prev);
     setClickCount(prev => prev + 1);
-  }, [clicked, setClicked, setClickCount]);
+  }, [setClicked, setClickCount]);
 
   const clickMessage = useMemo(() => {
     if (clickCount === 0) return null;
