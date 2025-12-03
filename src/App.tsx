@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,9 +8,9 @@ function App() {
   const [count, setCount] = useLocalStorage<number>('counter-value', 0)
   const [maxCount, setMaxCount] = useLocalStorage<number>('counter-max', 0)
 
-  const increment = () => setCount((prev) => prev + 1)
-  const decrement = () => setCount((prev) => prev - 1)
-  const reset = () => setCount(0)
+  const increment = useCallback(() => setCount((prev) => prev + 1), [setCount])
+  const decrement = useCallback(() => setCount((prev) => prev - 1), [setCount])
+  const reset = useCallback(() => setCount(0), [setCount])
 
   useEffect(() => {
     if (count > maxCount) {
@@ -37,7 +37,7 @@ function App() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [])
+  }, [setCount])
 
   return (
     <>

@@ -59,7 +59,7 @@ export default function TodoList() {
           placeholder="Yeni görev ekle..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
         />
         <button className="todo-add-btn" onClick={addTodo}>
           ➕ Ekle

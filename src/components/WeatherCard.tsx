@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import './WeatherCard.css';
 
 interface WeatherData {
@@ -19,11 +19,14 @@ export default function WeatherCard() {
   });
 
   const [loading, setLoading] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Simüle edilmiş hava durumu güncellemesi
-  const updateWeather = () => {
+  const updateWeather = useCallback(() => {
+    if (loading) return;
+    
     setLoading(true);
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       const cities = ['İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Bursa'];
       const conditions = ['Güneşli', 'Bulutlu', 'Yağmurlu', 'Karlı', 'Rüzgarlı'];
       
@@ -36,7 +39,15 @@ export default function WeatherCard() {
       });
       setLoading(false);
     }, 1000);
-  };
+  }, [loading]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const getWeatherEmoji = (condition: string) => {
     const emojiMap: Record<string, string> = {
