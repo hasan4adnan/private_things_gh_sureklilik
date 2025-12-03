@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './StatsCard.css';
 
 interface Stat {
@@ -15,6 +15,11 @@ export default function StatsCard() {
     { label: 'Görev Tamamlandı', value: 0, icon: '✅', color: '#f59e0b' },
     { label: 'Mesaj', value: 0, icon: '💬', color: '#ef4444' },
   ]);
+
+  const statsWithIds = useMemo(() => 
+    stats.map((stat, index) => ({ ...stat, id: `${stat.label}-${index}` })),
+    [stats]
+  );
 
   useEffect(() => {
     // Animasyonlu sayı artışı
@@ -52,9 +57,9 @@ export default function StatsCard() {
     <div className="stats-container">
       <h3 className="stats-title">📊 İstatistikler</h3>
       <div className="stats-grid">
-        {stats.map((stat, index) => (
+        {statsWithIds.map((stat) => (
           <div
-            key={index}
+            key={stat.id}
             className="stat-card"
             style={{ '--stat-color': stat.color } as React.CSSProperties}
           >

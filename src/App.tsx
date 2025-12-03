@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useMemo } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -11,6 +11,28 @@ function App() {
   const increment = useCallback(() => setCount((prev) => prev + 1), [setCount])
   const decrement = useCallback(() => setCount((prev) => prev - 1), [setCount])
   const reset = useCallback(() => setCount(0), [setCount])
+  const incrementBy10 = useCallback(() => setCount((prev) => prev + 10), [setCount])
+
+  const milestoneMessage = useMemo(() => {
+    const milestones = [10, 25, 50, 100]
+    if (milestones.includes(count)) {
+      const messages: Record<number, string> = {
+        10: "🎯 Tam 10! Mükemmel!",
+        25: "🌟 25'e ulaştınız! Süper!",
+        50: "🏆 50! Efsane!",
+        100: "🚀 100! İnanılmaz!"
+      }
+      return { text: messages[count], type: 'milestone' }
+    }
+    if (count > 10 && !milestones.includes(count)) {
+      return { text: "🎉 Harika! 10'dan fazla tıkladınız!", type: 'celebration' }
+    }
+    if (count < 0) return { text: "⚠️ Negatif değere ulaştınız!", type: 'warning' }
+    if (maxCount > 0 && count === maxCount && count > 0) {
+      return { text: `🏅 Yeni rekor! En yüksek: ${maxCount}`, type: 'record' }
+    }
+    return null
+  }, [count, maxCount])
 
   useEffect(() => {
     if (count > maxCount) {
@@ -61,7 +83,7 @@ function App() {
             Reset
           </button>
           <button 
-            onClick={() => setCount((prev) => prev + 10)} 
+            onClick={incrementBy10} 
             className="increment-10-btn"
             title="Add 10"
           >
@@ -74,39 +96,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-        {count > 10 && (
-          <p className="celebration-message">
-            🎉 Harika! 10'dan fazla tıkladınız!
-          </p>
-        )}
-        {count === 10 && (
-          <p className="milestone-message">
-            🎯 Tam 10! Mükemmel!
-          </p>
-        )}
-        {count === 25 && (
-          <p className="milestone-message">
-            🌟 25'e ulaştınız! Süper!
-          </p>
-        )}
-        {count === 50 && (
-          <p className="milestone-message">
-            🏆 50! Efsane!
-          </p>
-        )}
-        {count === 100 && (
-          <p className="milestone-message">
-            🚀 100! İnanılmaz!
-          </p>
-        )}
-        {count < 0 && (
-          <p className="warning-message">
-            ⚠️ Negatif değere ulaştınız!
-          </p>
-        )}
-        {maxCount > 0 && count === maxCount && count > 0 && (
-          <p className="record-message">
-            🏅 Yeni rekor! En yüksek: {maxCount}
+        {milestoneMessage && (
+          <p className={`${milestoneMessage.type}-message`}>
+            {milestoneMessage.text}
           </p>
         )}
       </div>

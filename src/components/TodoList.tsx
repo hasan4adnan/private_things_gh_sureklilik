@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import './TodoList.css';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -13,7 +13,7 @@ export default function TodoList() {
   const [todos, setTodos] = useLocalStorage<Todo[]>('todos', []);
   const [inputValue, setInputValue] = useState('');
 
-  const addTodo = () => {
+  const addTodo = useCallback(() => {
     if (inputValue.trim()) {
       const newTodo: Todo = {
         id: Date.now(),
@@ -21,23 +21,28 @@ export default function TodoList() {
         completed: false,
         createdAt: new Date().toISOString(),
       };
-      setTodos([...todos, newTodo]);
+      setTodos((prevTodos) => [...prevTodos, newTodo]);
       setInputValue('');
     }
-  };
+  }, [inputValue, setTodos]);
 
-  const toggleTodo = (id: number) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
-  };
+  const toggleTodo = useCallback((id: number) => {
+    setTodos((prevTodos) =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  }, [setTodos]);
 
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
+  const deleteTodo = useCallback((id: number) => {
+    setTodos((prevTodos) => prevTodos.filter(todo => todo.id !== id));
+  }, [setTodos]);
 
-  const completedCount = todos.filter(t => t.completed).length;
-  const totalCount = todos.length;
+  const completedCount = useMemo(() => 
+    todos.filter(t => t.completed).length, 
+    [todos]
+  );
+  const totalCount = useMemo(() => todos.length, [todos]);
 
   return (
     <div className="todo-container">
