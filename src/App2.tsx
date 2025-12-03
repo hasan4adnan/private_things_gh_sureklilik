@@ -1,25 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 export default function App2() {
-  const [clicked, setClicked] = useState(() => {
-    const saved = localStorage.getItem('app2-clicked')
-    return saved === 'true'
-  });
-  const [clickCount, setClickCount] = useState(() => {
-    const saved = localStorage.getItem('app2-click-count')
-    return saved ? parseInt(saved, 10) : 0
-  });
+  const [clicked, setClicked] = useLocalStorage<boolean>('app2-clicked', false);
+  const [clickCount, setClickCount] = useLocalStorage<number>('app2-click-count', 0);
 
   const handleClick = () => {
     setClicked(!clicked);
     setClickCount(prev => prev + 1);
   };
-
-  useEffect(() => {
-    localStorage.setItem('app2-clicked', clicked.toString())
-    localStorage.setItem('app2-click-count', clickCount.toString())
-  }, [clicked, clickCount])
 
   const getClickMessage = () => {
     if (clickCount === 0) return null;

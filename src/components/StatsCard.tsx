@@ -45,6 +45,7 @@ export default function StatsCard() {
     return () => {
       intervals.forEach(interval => clearInterval(interval));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import './TodoList.css';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface Todo {
   id: number;
   text: string;
   completed: boolean;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export default function TodoList() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useLocalStorage<Todo[]>('todos', []);
   const [inputValue, setInputValue] = useState('');
 
   const addTodo = () => {
@@ -18,7 +19,7 @@ export default function TodoList() {
         id: Date.now(),
         text: inputValue.trim(),
         completed: false,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
       };
       setTodos([...todos, newTodo]);
       setInputValue('');

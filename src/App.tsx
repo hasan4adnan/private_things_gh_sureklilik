@@ -1,29 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useLocalStorage } from './hooks/useLocalStorage'
 
 function App() {
-  const [count, setCount] = useState(() => {
-    const saved = localStorage.getItem('counter-value')
-    return saved ? parseInt(saved, 10) : 0
-  })
-  const [maxCount, setMaxCount] = useState(() => {
-    const saved = localStorage.getItem('counter-max')
-    return saved ? parseInt(saved, 10) : 0
-  })
+  const [count, setCount] = useLocalStorage<number>('counter-value', 0)
+  const [maxCount, setMaxCount] = useLocalStorage<number>('counter-max', 0)
 
   const increment = () => setCount((prev) => prev + 1)
   const decrement = () => setCount((prev) => prev - 1)
   const reset = () => setCount(0)
 
   useEffect(() => {
-    localStorage.setItem('counter-value', count.toString())
     if (count > maxCount) {
       setMaxCount(count)
-      localStorage.setItem('counter-max', count.toString())
     }
-  }, [count, maxCount])
+  }, [count, maxCount, setMaxCount])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
