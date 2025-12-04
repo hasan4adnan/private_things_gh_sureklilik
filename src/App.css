@@ -3,29 +3,13 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  animation: fadeInPage 0.5s ease-in;
-}
-
-@keyframes fadeInPage {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms, transform 300ms;
-}
-
-.logo:active {
-  transform: scale(0.95);
+  transition: filter 300ms;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -45,212 +29,60 @@
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
+  body {
+    background: #f4f6fb;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mini-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(79, 140, 255, 0.08);
+    max-width: 340px;
+    margin: 48px auto;
+    padding: 32px 24px;
+    text-align: center;
+    transition: box-shadow 0.2s;
+  }
+
+  .mini-card:hover {
+    box-shadow: 0 8px 32px rgba(79, 140, 255, 0.16);
+  }
+
+  .mini-card h2 {
+    color: #4f8cff;
+    margin-bottom: 12px;
+  }
+
+  .mini-card p {
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  .mini-card button {
+    background: #4f8cff;
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .mini-card button:hover {
+    background: #2563eb;
+  }
     animation: logo-spin infinite 20s linear;
   }
 }
 
-.mini-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(79, 140, 255, 0.08);
-  max-width: 340px;
-  margin: 48px auto;
-  padding: 32px 24px;
-  text-align: center;
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-
-.mini-card:hover {
-  box-shadow: 0 8px 32px rgba(79, 140, 255, 0.16);
-  transform: translateY(-2px);
-}
-
-.mini-card h2 {
-  color: #4f8cff;
-  margin-bottom: 12px;
-}
-
-.mini-card p {
-  color: #444;
-  margin-bottom: 20px;
-}
-
-.mini-card .click-info {
-  color: #4f8cff;
-  font-size: 0.9em;
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-.mini-card button {
-  background: #4f8cff;
-  color: #fff;
-  border: none;
-  padding: 10px 28px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.mini-card button:hover {
-  background: #2563eb;
-  transform: scale(1.05);
-}
-
 .card {
   padding: 2em;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.counter-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.counter-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.counter-btn:active {
-  transform: scale(0.95);
-}
-
-.counter-value {
-  font-size: 1.2em;
-  font-weight: 600;
-  min-width: 140px;
-  color: #646cff;
-  transition: transform 0.2s ease, color 0.2s ease;
-  display: inline-block;
-}
-
-.counter-value:hover {
-  transform: scale(1.05);
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.reset-btn {
-  opacity: 0.7;
-  font-size: 0.9em;
-}
-
-.reset-btn:hover {
-  opacity: 1;
-}
-
-.increment-10-btn {
-  opacity: 0.7;
-  font-size: 0.9em;
-  background-color: #10b981;
-  color: white;
-  border: none;
-}
-
-.increment-10-btn:hover {
-  opacity: 1;
-  background-color: #059669;
 }
 
 .read-the-docs {
   color: #888;
-  margin-bottom: 0.5em;
-}
-
-.footer-info {
-  margin-top: 2em;
-  padding-top: 1em;
-  border-top: 1px solid rgba(136, 136, 136, 0.2);
-}
-
-.footer-info small {
-  color: #888;
-  font-size: 0.85em;
-  display: block;
-  margin-top: 4px;
-}
-
-.save-indicator {
-  color: #10b981 !important;
-  font-size: 0.75em !important;
-  animation: fadeIn 0.3s ease-in;
-}
-
-.max-indicator {
-  color: #8b5cf6 !important;
-  font-size: 0.75em !important;
-  font-weight: 600;
-}
-
-.record-message {
-  color: #f59e0b;
-  font-weight: bold;
-  margin-top: 1em;
-  animation: fadeIn 0.5s ease-in, pulse 1s ease-in-out infinite;
-}
-
-.celebration-message {
-  color: #10b981;
-  font-weight: bold;
-  margin-top: 1em;
-  animation: fadeIn 0.5s ease-in;
-}
-
-.warning-message {
-  color: #f59e0b;
-  font-weight: bold;
-  margin-top: 1em;
-  animation: fadeIn 0.5s ease-in;
-}
-
-.milestone-message {
-  color: #8b5cf6;
-  font-weight: bold;
-  margin-top: 1em;
-  animation: fadeIn 0.5s ease-in;
-}
-
-.keyboard-hint {
-  margin-top: 0.5em;
-  opacity: 0.7;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
