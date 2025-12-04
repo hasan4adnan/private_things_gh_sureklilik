@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 
+/**
+ * Custom hook for managing localStorage state
+ * @param key - The localStorage key
+ * @param initialValue - Initial value if key doesn't exist
+ * @returns Tuple of [storedValue, setValue]
+ */
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === 'undefined') {

@@ -45,6 +45,7 @@ export default function WeatherCard() {
         windSpeed: Math.floor(Math.random() * 20) + 5,
       });
       setLoading(false);
+      timeoutRef.current = null;
     }, 1000);
   }, [loading]);
 
@@ -52,6 +53,7 @@ export default function WeatherCard() {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
       }
     };
   }, []);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './ThemeToggle.css';
 
 export default function ThemeToggle() {
@@ -17,12 +17,12 @@ export default function ThemeToggle() {
     }
   }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-  };
+  }, [theme]);
 
   return (
     <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
